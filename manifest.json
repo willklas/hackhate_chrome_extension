@@ -1,0 +1,35 @@
+// basically config file for the extenson giving chrome all the base info it needs like name, version, scripts, etc.
+// everything starts here
+
+// '{}' braces always refer to a single json object (name value pairs) while '[]' refer to a list of values 
+// and/or json objects. Names must be doubel quoted strings, values can be null, strings, ints, list, 
+// or json object
+{
+    "manifest_version": 2, // version '1' is now unsupported so keep it '2'
+    "name": "HateHacker",
+    "version": "1.0",
+    "content_scripts": [ // content scripts have access to actual webpage content
+        { // this tells chrome to inject/run the listed scripts into all pages we vist from 'matches'
+          // chrome only injects content scipts once DOM has loaded so we don't need to check if it
+          // has loaded with the scripts themselves .
+          // These scripts do NOT have access to browser actions of chrome api
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [ // exectuted in order
+                "jquery-3.6.0.js", // feature rich js library for greatly simplifying js
+                "content2.js",
+                "content.js"
+            ]
+        }
+    ],
+    // this defines the UI for everything to do with the icon for the extionsion
+    // - icon, tool tip, badge, and popup. This is not part of the page but part of the browser
+    "browser_action": {
+        "default_icon": "icon.png"
+    },
+    "background": { // scripts here have access to all chrome api (inc. browser actions) but not page 
+                    // which content scripts can access
+        "scripts": ["background.js"]
+    }
+}
