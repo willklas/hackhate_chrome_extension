@@ -1,19 +1,23 @@
-// 'content' page is a js page that runs in the 'context' of web pages meaning it 
-// can acutally interact with the data on the pages that the browser visits.
-// This is important and not all extension js pages have this access
+/* NOTES:
+   Content pages are js pages that run in the 'context' of web pages meaning it 
+   can acutally interact with the data on the pages (html, css, js, etc) that the 
+   browser visits. This is important and not all js pages have this access (background).
+   
+   '$' indicates we are using jquery
+   ex: var firstHref = $("a[href^='http']").eq(0).attr("href");
+   - the first '(...) is for matching/selecting an html element(s) from the page
+   - the .action (everyting after '.') is some jquery action to perform on mathced element(s) 
+*/
 
-// alert("hi, this is conent.js!")
 
-// '$' indicates we are using jquery, 
-// first '(...) is for matching/selecting an html element(s) from the page
-// .action - everyting after '.' is some jquery action to perform on mathced element(s)
-// var firstHref = $("a[href^='http']").eq(0).attr("href");
-
-// everything outside functions, listeners, observers, etc. will be run once when content.js is injected
+/* everything outside functions, listeners, observers, etc. will be run once when content.js is injected
+   which is after the DOM has loaded
+*/
 console.log("content.js has been injected..."); // console can be viewed in chrome dev tools
+// wait(3)
 do_stuff()
 
-// content.js
+// listener for messages from the background
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         console.log("content.js onMessage listener: here 1");
@@ -32,6 +36,7 @@ chrome.runtime.onMessage.addListener(
     }
 );
 
+// ???
 let observer = new MutationObserver(mutations => {
     // console.log("content.js observer: here 1");
     for(let mutation of mutations) {
@@ -42,14 +47,15 @@ let observer = new MutationObserver(mutations => {
           }
      }
  });
- // observer vs listener!??
- observer.observe(document, { childList: true, subtree: true });
+// observer vs listener!??
+observer.observe(document, { childList: true, subtree: true });
 
+// check if element is in the user's viewport
 function isElementInViewport(el) {
     // Special bonus for those using jQuery ???
-    if (typeof jQuery === "function" && el instanceof jQuery) {
-        el = el[0];
-    }
+    // if (typeof jQuery === "function" && el instanceof jQuery) {
+    //     el = el[0];
+    // }
 
     var rect = el.getBoundingClientRect();
 
@@ -92,162 +98,162 @@ function isElementInViewport(el) {
     
 }
 
+// responsilbe from getting text out of images
+function extract_txt_from_image(image_node) {
+    /*
+    // method 1
+    const settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": "https://ocrly-image-to-text.p.rapidapi.com/?filename=sample.jpg&imageurl="  + image_node.src,
+        "method": "GET",
+        "headers": {
+            "x-rapidapi-host": "ocrly-image-to-text.p.rapidapi.com",
+            "x-rapidapi-key": "a91e97306bmsh98b468113e69376p1c150cjsnf5109e5092b4"
+        }
+    };
+    
+    $.ajax(settings).done(function (response) {
+        console.log(response);
+    });
+    */
 
-// document.addEventListener('DOMContentLoaded', function() {
-//     var theButton = document.getElementById('poop1');
-//     theButton.addEventListener('click', function() {
-//         alert('damn');
-//     });
-// });
+    // method 2
+    //Prepare form data
+    var formData = new FormData();
+    // formData.append("file", fileToUpload);
+    formData.append("url", image_node.src);
+    formData.append("language"   , "eng");
+    formData.append("apikey"  , "3c7cd89dfb88957");
+    formData.append("isOverlayRequired", "False");
+    //Send OCR Parsing request asynchronously
 
+    console.log("huh??")
+    
+    $.ajax({
+        url: 'https://api.ocr.space/parse/image',
+        data: formData,
+        dataType: 'json',
+        cache: false,
+        contentType: false,
+        processData: false,
+        type: 'POST',
+        success: function (ocrParsedResult) {
+            //Get the parsed results, exit code and error message and details
+            var parsed_results = (ocrParsedResult["ParsedResults"])
+            var parsed_text = ""
+            if (parsed_results) {
+                parsed_text = parsed_results[0].ParsedText
+            }
+            console.log("extracted text: ", parsed_text, parsed_text.length)
+            return
+        }
+    });
+}
 
-
-
-const elements_seen      = new Set()
-const elements_processed = new Set()
-const collection = new Map();
-var button_id = 0
-
+const elements_seen        = new Set()
+const button_to_image_dict = new Map()
+var   num_images_processed = 0
+// unblur blurred images and remove button
 function unblur_image(event) {
+    console.log("unbluring image for button: ", event.target.id)
     event.stopImmediatePropagation();
     event.stopPropagation()
     event.preventDefault();
 
-    console.log("hahaha", event.target.id)
-    var theButton = document.getElementById(event.target.id)
-    console.log(theButton.previousSibling.nodeName)
-    collection.get(event.target.id).style.webkitFilter = "blur(0px)";
-    node = collection.get(event.target.id)
-    theButton.parentNode.removeChild(theButton) // remove <a>
+    var button_node = document.getElementById(event.target.id)
+    var image_node  = button_to_image_dict.get(event.target.id)
+
+    console.log(typeof button_node);
+    console.log(typeof image_node);
+
+    image_node.style.webkitFilter = "blur(0px)";
+    button_node.parentNode.removeChild(button_node)
 
     return
 }
 
+// mouse on hover animation
+function button_onmouse_hover(event) {
+    var button_node = document.getElementById(event.target.id)
+    button_node.style.backgroundColor='black'
+}
 
+// mouse off hover animation
+function button_offmouse_hover(event) {
+    var button_node = document.getElementById(event.target.id)
+    button_node.style.backgroundColor='#555'
+}
+
+// everytime it's called, process any unprocessed images (add button and blur)
 function do_stuff() {
     window.requestAnimationFrame(function() {
         // var arrOfPtags = document.getElementsByTagName("p");
         var arrOfPtags = document.querySelectorAll('img')
-        console.log("here 1");
         for (var i = 0;i < arrOfPtags.length; i++){
-            console.log("here 2");
             // arrOfPtags[i].setAttribute("desired_attribute", "value");
             if (!elements_seen.has(arrOfPtags[i])) {
                 var el_view = isElementInViewport(arrOfPtags[i]);
-                if (el_view > .4) {
-                    elements_seen.add(arrOfPtags[i]);
+                if (el_view > .2) {
                     console.log('Element is sig. in the viewport!', el_view);
-                    arrOfPtags[i].style.webkitFilter = "blur(6px)";
-                    elements_processed.add(arrOfPtags[i])
 
-                    var button = document.createElement("button");
-                    button.innerHTML = "show content?";
-                    
-                    
-                    // button.onclick = function() {
-                    //     console.log("clicked");
-                    // }
-                    button.id = "poop" + button_id.toString()
-                    button.onclick="event.stopPropagation();"
-                    button_id += 1
+                    // track the images we have processed
+                    elements_seen.add(arrOfPtags[i]);
+                    num_images_processed += 1
 
-                    // var theButton = document.getElementById('poop1');
-                    // theButton.addEventListener('click', function() {
-                    //     alert('damnfffffffffff');
-                    // });
+                    if (arrOfPtags[i].height*arrOfPtags[i].width > 8000) {
 
-                    var image_node   = arrOfPtags[i]
-                    
-                    var super_parent = arrOfPtags[i].parentNode.parentNode
-                    var button_node  = button
+                        console.log(".........", arrOfPtags[i].height*arrOfPtags[i].width)
 
-                    var wrapper = document.createElement("div");
-                    wrapper.id = "hehehaha"
+                        arrOfPtags[i].style.webkitFilter = "blur(6px)";
 
-                    // arrOfPtags[i].append(button);
-                    // console.log("...............",arrOfPtags[i].parentNode.nodeName)
-                    // if (arrOfPtags[i].parentNode.nodeName == "A") {
-                    //     super_parent.insertBefore(wrapper, parent_node)
-                    //     super_parent.removeChild(parent_node) // remove <a>
-                    //     wrapper.insertBefore(parent_node, null)
-                    //     arrOfPtags[i].parentNode.parentNode.insertBefore(button, arrOfPtags[i].parentNode.nextSibling);
-
-                    // }
-                    // else {
-                    //     arrOfPtags[i].parentNode.insertBefore(button, arrOfPtags[i].nextSibling);
+                        // create button for hateful image
+                        var button_node         = document.createElement("button");
+                        button_node.innerHTML   = "Show hateful content?";
+                        button_node.id          = "hate_hack_image_" + num_images_processed.toString()
+                        button_node.onmouseover = button_onmouse_hover;
+                        button_node.onmouseout  = button_offmouse_hover;
                         
-                    // }
+                        // map the button to the image so we can reference the image later with button events
+                        button_to_image_dict.set(button_node.id, arrOfPtags[i]);
+                        
+                        // create wrapper div tags to help align button in center of image
+                        var wrapper = document.createElement("div");
+                        wrapper.id = "hateful_wrapper"
 
+                        // get parent node of image node
+                        var parent_node = arrOfPtags[i].parentNode
+                        
+                        // option 1 -> seems to work well for facebook only
+                        parent_node.insertBefore(button_node, arrOfPtags[i].nextSibling);
+                        button_node.addEventListener('click', unblur_image);
 
-                    var parent_node = arrOfPtags[i].parentNode
-                    parent_node.insertBefore(wrapper, arrOfPtags[i])
-                    parent_node.removeChild(arrOfPtags[i])
-                    wrapper.insertBefore(arrOfPtags[i], null)
-                    wrapper.insertBefore(button, null)
-                    // parent_node.insertBefore(button, arrOfPtags[i].nextSibling);
-
-                    // arrOfPtags[i].parentNode.insertBefore(button, arrOfPtags[i].nextSibling);
-                    
-                    
-
-                    button.addEventListener('click', unblur_image);
-                    collection.set(button.id, arrOfPtags[i]);
-
-                    // wrapper.style = "position:relative;width: 50%;"
-
-
-
-
-                    // button.style = "margin: 0; \
-                    //                 position: absolute; \
-                    //                 top: 50%; \
-                    //                 left: 50%; \
-                    //                 -ms-transform: translate(-50%, -50%); \
-                    //                 transform: translate(-50%, -50%);"
-                    
-                    test        = "position: absolute; \
-                                   top: 50%; \
-                                   left: 50%; \
-                                   transform: translate(-50%, -50%); \
-                                   -ms-transform: translate(-50%, -50%); \
-                                   background-color: #555; \
-                                   color: white; \
-                                   font-size: 12px; \
-                                   padding: 12px 24px; \
-                                   border: none; \
-                                   cursor: pointer; \
-                                   border-radius: 5px;"
-                    test = "position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);-ms-transform: translate(-50%, -50%);"
-                    wrapper.style="display:inline-block;position:relative;"
-                    button.style = test
-
-
-                    
-
-                    
-
-                    // var theButton = document.getElementById('poop1');
-                    // button.addEventListener('click', test);
-                    
-
-
-                    // org_html = document.getElementById("slidesContainer").innerHTML;
-                    // document.getElementById("slidesContainer").innerHTML = new_html;
-
-                    
-                    // org_html = arrOfPtags[i].innerHTML;
-                    // new_html = "<div class='container'>" + org_html + "<button class='btn'>Button</button></div>";
-                    // arrOfPtags[i].innerHTML = new_html;
-
-                    // <div class="container">
-                    // <img src="img_snow.jpg" alt="Snow">
-                    // <button class="btn">Button</button>
-                    // </div>
-                   
+                        //option 2 -> seems to work well for wikipedia only
+                        /*
+                        parent_node.insertBefore(wrapper, arrOfPtags[i])
+                        parent_node.removeChild(arrOfPtags[i])
+                        wrapper.insertBefore(arrOfPtags[i], null)
+                        wrapper.insertBefore(button, null)
+                        */
+                        
+                        // style the button and wrapper
+                        button_style= "position: absolute; \
+                                       top: 50%; \
+                                       left: 50%; \
+                                       transform: translate(-50%, -50%); \
+                                       -ms-transform: translate(-50%, -50%); \
+                                       background-color: #555; \
+                                       color: white; \
+                                       font-size: 11px; \
+                                       padding: 12px 24px; \
+                                       border: none; \
+                                       cursor: pointer; \
+                                       border-radius: 5px;"
+                        
+                        button_node.style = button_style
+                        wrapper.style="display:inline-block;position:relative;"
+                    }
                 }
-                // else {
-                //     arrOfPtags[i].style.webkitFilter = "blur(0px)";
-                // }
             }
         }
     });
