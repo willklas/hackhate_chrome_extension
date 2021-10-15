@@ -15,7 +15,7 @@
 */
 console.log("content.js has been injected..."); // console can be viewed in chrome dev tools
 // wait(3)
-do_stuff()
+process_images()
 
 // listener for messages from the background
 chrome.runtime.onMessage.addListener(
@@ -30,7 +30,8 @@ chrome.runtime.onMessage.addListener(
             // chrome.tabs.sendMessage(activeTab.id, {"msg_from_content": firstHref});
             
             // 'chrome.runtime.sendMessage' used to send messages to background
-            chrome.runtime.sendMessage({"message_from_content": "open_new_tab", "url": firstHref});
+            // chrome.runtime.sendMessage({"message_from_content": "open_new_tab", "url": firstHref});
+            // chrome.runtime.sendMessage({"do_it": "yup"});
 
        }
     }
@@ -146,6 +147,7 @@ function extract_txt_from_image(image_node) {
                 parsed_text = parsed_results[0].ParsedText
             }
             console.log("extracted text: ", parsed_text, parsed_text.length)
+            // check_for_hate(image_node, parsed_text)
             return
         }
     });
@@ -185,16 +187,98 @@ function button_offmouse_hover(event) {
     button_node.style.backgroundColor='#555'
 }
 
+// 
+function check_for_hate(element, text) {
+    if (text.length < 10) {
+        return
+    }
+    
+    /*
+    $.ajax({
+        url: 'custom_hate_api',
+        data: text, // wrap this in json maybe?
+        dataType: 'json',
+        cache: false,
+        contentType: false,
+        processData: false,
+        type: 'POST',
+        success: function (ocrParsedResult) {
+            result = result
+            if (result == 'hate') {
+                // put below code snippet here
+            }
+        }
+    });
+    */
+
+
+    // if text contains hate speech
+    element.style.webkitFilter = "blur(6px)";
+
+    // create button for hateful image
+    var button_node         = document.createElement("button");
+    button_node.innerHTML   = "Show hateful content?";
+    button_node.id          = "hate_hack_image_" + num_images_processed.toString()
+    button_node.onmouseover = button_onmouse_hover;
+    button_node.onmouseout  = button_offmouse_hover;
+    
+    // map the button to the image so we can reference the image later with button events
+    button_to_image_dict.set(button_node.id, element);
+    
+    // create wrapper div tags to help align button in center of image
+    var wrapper = document.createElement("div");
+    wrapper.id = "hateful_wrapper"
+
+    // get parent node of image node
+    var parent_node = element.parentNode
+    
+    // option 1 -> seems to work well for facebook only
+    parent_node.insertBefore(button_node, element.nextSibling);
+    button_node.addEventListener('click', unblur_image);
+
+    // option 2 -> seems to work well for wikipedia only
+    // parent_node.insertBefore(wrapper, element)
+    // parent_node.removeChild(element)
+    // wrapper.insertBefore(element, null)
+    // wrapper.insertBefore(button, null)
+    
+    // style the button and wrapper
+    button_style= "position: absolute; \
+                    top: 50%; \
+                    left: 50%; \
+                    transform: translate(-50%, -50%); \
+                    -ms-transform: translate(-50%, -50%); \
+                    background-color: #555; \
+                    color: white; \
+                    font-size: 11px; \
+                    padding: 12px 24px; \
+                    border: none; \
+                    cursor: pointer; \
+                    border-radius: 5px;"
+    
+    button_node.style = button_style
+    wrapper.style="display:inline-block;position:relative;"
+
+    return
+}
+
 // everytime it's called, process any unprocessed images (add button and blur)
-function do_stuff() {
+function process_images() {
     window.requestAnimationFrame(function() {
         // var arrOfPtags = document.getElementsByTagName("p");
         var arrOfPtags = document.querySelectorAll('img')
         for (var i = 0;i < arrOfPtags.length; i++){
             // arrOfPtags[i].setAttribute("desired_attribute", "value");
             if (!elements_seen.has(arrOfPtags[i])) {
-                var el_view = isElementInViewport(arrOfPtags[i]);
-                if (el_view > .2) {
+                // check for hateful speech
+                
+                // if we have text
+                // check_for_hate( arrOfPtags[i], text )
+                // else get text and the submit
+
+                
+
+
                     console.log('Element is sig. in the viewport!', el_view);
 
                     // track the images we have processed
@@ -205,54 +289,18 @@ function do_stuff() {
 
                         console.log(".........", arrOfPtags[i].height*arrOfPtags[i].width)
 
-                        arrOfPtags[i].style.webkitFilter = "blur(6px)";
-
-                        // create button for hateful image
-                        var button_node         = document.createElement("button");
-                        button_node.innerHTML   = "Show hateful content?";
-                        button_node.id          = "hate_hack_image_" + num_images_processed.toString()
-                        button_node.onmouseover = button_onmouse_hover;
-                        button_node.onmouseout  = button_offmouse_hover;
                         
-                        // map the button to the image so we can reference the image later with button events
-                        button_to_image_dict.set(button_node.id, arrOfPtags[i]);
-                        
-                        // create wrapper div tags to help align button in center of image
-                        var wrapper = document.createElement("div");
-                        wrapper.id = "hateful_wrapper"
-
-                        // get parent node of image node
-                        var parent_node = arrOfPtags[i].parentNode
-                        
-                        // option 1 -> seems to work well for facebook only
-                        parent_node.insertBefore(button_node, arrOfPtags[i].nextSibling);
-                        button_node.addEventListener('click', unblur_image);
-
-                        //option 2 -> seems to work well for wikipedia only
-                        /*
-                        parent_node.insertBefore(wrapper, arrOfPtags[i])
-                        parent_node.removeChild(arrOfPtags[i])
-                        wrapper.insertBefore(arrOfPtags[i], null)
-                        wrapper.insertBefore(button, null)
-                        */
-                        
-                        // style the button and wrapper
-                        button_style= "position: absolute; \
-                                       top: 50%; \
-                                       left: 50%; \
-                                       transform: translate(-50%, -50%); \
-                                       -ms-transform: translate(-50%, -50%); \
-                                       background-color: #555; \
-                                       color: white; \
-                                       font-size: 11px; \
-                                       padding: 12px 24px; \
-                                       border: none; \
-                                       cursor: pointer; \
-                                       border-radius: 5px;"
-                        
-                        button_node.style = button_style
-                        wrapper.style="display:inline-block;position:relative;"
                     }
+
+
+
+                // }
+            }
+            else {
+                var el_view = isElementInViewport(arrOfPtags[i]);
+                if (el_view > .2) {
+                    console.log("hahahahdddddddddda")
+                    chrome.runtime.sendMessage({"do_it": "yup"});
                 }
             }
         }
@@ -264,7 +312,7 @@ function do_stuff() {
 document.addEventListener('scroll', function(e) {
     // lastKnownScrollPosition = window.scrollY;
     // console.log('Scroll event listener hit!');
-    do_stuff()
+    process_images()
     return;
 });
 
