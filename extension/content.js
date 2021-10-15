@@ -260,6 +260,7 @@ function do_stuff() {
     return;
 }
 
+// listen for scrolls 
 document.addEventListener('scroll', function(e) {
     // lastKnownScrollPosition = window.scrollY;
     // console.log('Scroll event listener hit!');
