@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head id="sources">
         <title> MyBestShop </title>
+        <!-- <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'sha256-sWYHTj2Wwc79eR6vfK52z/vbzgN8zskd/E8VETH2KYc='"> -->
         <meta charset="UTF-8">
         <!--CSS Custom Style Sheet -->
         <link rel="stylesheet" href="..\style\style.css" type="text/css"></link>
@@ -87,8 +88,8 @@
                 <div class="topnav" id="myTopnav">
                     <a href="HomePage.html" class="active">Home</a>
                     <a href="SendaGiftPage.html">Empower Yourself with Knowledge</a>
-                    <a href="#contact">Contact</a>
-                    <a href="#about">About</a>
+                    <a href="HomePage.html#contact">Contact</a>
+                    <a href="HomePAge.html#about">About</a>
                     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
                       <i class="fa fa-bars"></i>
                     </a>
@@ -213,8 +214,7 @@
         x.className = "topnav";
       }
     }
-</script>
-<script>
+
     // triggers the function to switch between normal mode and accessibility mode for large font
     $("#accessibilityButton").click(accessibilityFunc);
     

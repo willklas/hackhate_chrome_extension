@@ -29,7 +29,7 @@
     "browser_action": {
         "default_icon": "wolf.png",
         // "default_popup": "popup/index.html"
-        "default_popup": "popup.html"
+        "default_popup": "dorsatemp/Main/pages/SendaGiftPage.html"
 
     },
     // "web_accessible_resources": [
@@ -40,5 +40,7 @@
     "background": { // scripts here have access to all chrome api (inc. browser actions) but not page 
                     // which content scripts can access
         "scripts": ["background.js"]
-    }
+    },
+    // "content_security_policy": "script-src 'self' 'sha256-sWYHTj2Wwc79eR6vfK52z/vbzgN8zskd/E8VETH2KYc='"
+    "content-security-policy": "default-src https:; script-src https: 'unsafe-inline'; style-src https: 'unsafe-inline'"
 }
