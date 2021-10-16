@@ -101,6 +101,7 @@ function isElementInViewport(el) {
 
 // responsilbe from getting text out of images
 function extract_txt_from_image(image_node) {
+    
     /*
     // method 1
     const settings = {
@@ -118,6 +119,8 @@ function extract_txt_from_image(image_node) {
         console.log(response);
     });
     */
+    console.log("heeeeerrrreee we areee")
+    // return
 
     // method 2
     //Prepare form data
@@ -147,15 +150,17 @@ function extract_txt_from_image(image_node) {
                 parsed_text = parsed_results[0].ParsedText
             }
             console.log("extracted text: ", parsed_text, parsed_text.length)
-            // check_for_hate(image_node, parsed_text)
+            check_for_hate(image_node, parsed_text)
             return
         }
     });
 }
 
-const elements_seen        = new Set()
+const elements_loaded = new Set() // loaded into DOM
+const elements_seen   = new Set() // seen by user (significantly in viewport)
+
 const button_to_image_dict = new Map()
-var   num_images_processed = 0
+var   num_elements_processed = 0
 // unblur blurred images and remove button
 function unblur_image(event) {
     console.log("unbluring image for button: ", event.target.id)
@@ -187,38 +192,15 @@ function button_offmouse_hover(event) {
     button_node.style.backgroundColor='#555'
 }
 
-// 
-function check_for_hate(element, text) {
-    if (text.length < 10) {
-        return
-    }
-    
-    /*
-    $.ajax({
-        url: 'custom_hate_api',
-        data: text, // wrap this in json maybe?
-        dataType: 'json',
-        cache: false,
-        contentType: false,
-        processData: false,
-        type: 'POST',
-        success: function (ocrParsedResult) {
-            result = result
-            if (result == 'hate') {
-                // put below code snippet here
-            }
-        }
-    });
-    */
-
-
+// blur image
+function blur_element(element) {
     // if text contains hate speech
     element.style.webkitFilter = "blur(6px)";
 
     // create button for hateful image
     var button_node         = document.createElement("button");
-    button_node.innerHTML   = "Show hateful content?";
-    button_node.id          = "hate_hack_image_" + num_images_processed.toString()
+    button_node.innerHTML   = "🐺Show?";
+    button_node.id          = "hate_hack_image_" + num_elements_processed.toString()
     button_node.onmouseover = button_onmouse_hover;
     button_node.onmouseout  = button_offmouse_hover;
     
@@ -232,15 +214,18 @@ function check_for_hate(element, text) {
     // get parent node of image node
     var parent_node = element.parentNode
     
-    // option 1 -> seems to work well for facebook only
-    parent_node.insertBefore(button_node, element.nextSibling);
-    button_node.addEventListener('click', unblur_image);
-
-    // option 2 -> seems to work well for wikipedia only
-    // parent_node.insertBefore(wrapper, element)
-    // parent_node.removeChild(element)
-    // wrapper.insertBefore(element, null)
-    // wrapper.insertBefore(button, null)
+    if ( element.tagName == "IMG" ) {
+        // option 1 -> seems to work well for facebook only
+        parent_node.insertBefore(button_node, element.nextSibling);
+        button_node.addEventListener('click', unblur_image);
+    }
+    else {
+        parent_node.insertBefore(wrapper, element)
+        parent_node.removeChild(element)
+        wrapper.insertBefore(element, null)
+        wrapper.insertBefore(button_node, null)
+        button_node.addEventListener('click', unblur_image);
+    }
     
     // style the button and wrapper
     button_style= "position: absolute; \
@@ -251,7 +236,7 @@ function check_for_hate(element, text) {
                     background-color: #555; \
                     color: white; \
                     font-size: 11px; \
-                    padding: 12px 24px; \
+                    padding: 6px 15px; \
                     border: none; \
                     cursor: pointer; \
                     border-radius: 5px;"
@@ -262,44 +247,142 @@ function check_for_hate(element, text) {
     return
 }
 
+// 
+function check_for_hate(element, text) {
+    console.log("oh my my my 2")
+    if (text.length < 20) {
+        // blur_element(element)
+        return
+    }
+    // if (text.toLowerCase().includes("you are the")) {
+        console.log("muah mauah muahghhh", text)
+        // alert("hja")
+        blur_element(element)
+    // }
+    
+    /*
+    $.ajax({
+        url: 'custom_hate_api',
+        data: text, // wrap this in json maybe?
+        dataType: 'json',
+        cache: false,
+        contentType: false,
+        processData: false,
+        type: 'POST',
+        success: function (ocrParsedResult) {
+            result = result
+            if (result == 'hate') {
+                blur_element(element)
+            }
+        }
+    });
+    */
+
+
+    
+
+    return
+}
+
+const getDivElementsWithNoChildren = (target) => {
+    let candidates;
+
+    if (target && typeof target.querySelectorAll === 'function') {
+        candidates = target.querySelectorAll('*');
+    }
+    else if (target && typeof target.length === 'number') {
+        candidates = target;
+    }
+    else {
+        candidates = document.querySelectorAll('div');
+    }
+
+    return Array.from(candidates).filter((elem) => {
+        return elem.children.length === 0;
+    });
+};
+
 // everytime it's called, process any unprocessed images (add button and blur)
 function process_images() {
     window.requestAnimationFrame(function() {
-        // var arrOfPtags = document.getElementsByTagName("p");
-        var arrOfPtags = document.querySelectorAll('img')
-        for (var i = 0;i < arrOfPtags.length; i++){
-            // arrOfPtags[i].setAttribute("desired_attribute", "value");
-            if (!elements_seen.has(arrOfPtags[i])) {
-                // check for hateful speech
+        console.log("boo")
+        // var elements_array = document.getElementsByTagName("p");
+        var img_elements_array = document.querySelectorAll('img')
+        // var elements_array = $('*:not(:has(*))');
+        var div_elements_array = getDivElementsWithNoChildren()
+        // var elements_array = img_elements_array.concat(div_elements_array)
+        var elements_array = Array.from(img_elements_array).concat(Array.from(div_elements_array))
+        for (var i = 0;i < elements_array.length; i++) {
+            // elements_array[i].setAttribute("desired_attribute", "value");
+            if (!elements_loaded.has(elements_array[i])) {
+                elements_loaded.add(elements_array[i]);
+
+                var span_descendants = elements_array[i].querySelectorAll("div");
+
+                
+
+                // if (elements_array[i].childNodes.length != 1) {
+                //     // don't want nodes with children
+                //     elements_seen.add(elements_array[i]);
+                //     return
+                // }
+
+                // console.log("hahaha", elements_array[i].tagName)
+                // console.log("hahaha", elements_array[i].textContent)
+                // console.log("------------", elements_array[i].childNodes.length)
+                
+
+                tag = elements_array[i].tagName
+
+                num_elements_processed += 1
+
+                
+                // check for hateful speech and (asynchonosly) apply blurring if hateful
                 
                 // if we have text
-                // check_for_hate( arrOfPtags[i], text )
+                // check_for_hate( elements_array[i], text )
                 // else get text and the submit
 
                 
 
+                // console.log('Element is sig. in the viewport!', el_view);
 
-                    console.log('Element is sig. in the viewport!', el_view);
-
-                    // track the images we have processed
-                    elements_seen.add(arrOfPtags[i]);
-                    num_images_processed += 1
-
-                    if (arrOfPtags[i].height*arrOfPtags[i].width > 8000) {
-
-                        console.log(".........", arrOfPtags[i].height*arrOfPtags[i].width)
-
-                        
+                // track the images we have processed
+                // elements_loaded.add(elements_array[i]);
+                // num_elements_processed += 1
+                if (tag == "IMG") {
+                    if (elements_array[i].height*elements_array[i].width > 10000) {
+                        // blur_element(elements_array[i])
+                        extract_txt_from_image(elements_array[i])
                     }
+                    else {
+                        // too small
+                        elements_seen.add(elements_array[i]);
+                    }
+                }
+                else { // (tag == "SPAN")
+                    // console.log("oh my my my 1: ", elements_array[i].textContent )
+                    if (span_descendants.length == 0) {
+                        check_for_hate( elements_array[i], elements_array[i].textContent )
+                    }
+                }
+                
+
+                //     console.log(".........", elements_array[i].height*elements_array[i].width)
+
+                    
+                // }
 
 
 
                 // }
             }
-            else {
-                var el_view = isElementInViewport(arrOfPtags[i]);
-                if (el_view > .2) {
-                    console.log("hahahahdddddddddda")
+            // if element has been loaded (hatefully processed) but not yet seen
+            else if (!elements_seen.has(elements_array[i])) {
+                var el_view = isElementInViewport(elements_array[i]);
+                if (el_view > .5) {
+                    elements_seen.add(elements_array[i]);
+                    console.log("telling background to invoke icon badge...")
                     chrome.runtime.sendMessage({"do_it": "yup"});
                 }
             }

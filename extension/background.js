@@ -4,8 +4,8 @@
 console.log("this should run right away!")
 // chrome.browserAction.setBadgeText({ tabId: myTabId, text: 'grr' });
 // or to add it to all tabs:
-chrome.browserAction.setBadgeText({ text: '!' });
-chrome.browserAction.setBadgeBackgroundColor({ color: 'red' });
+// chrome.browserAction.setBadgeText({ text: '!' });
+// chrome.browserAction.setBadgeBackgroundColor({ color: 'red' });
 // or to remove it from all tabs:
 // chrome.browserAction.setBadgeText({ });
 
@@ -29,6 +29,8 @@ chrome.runtime.onMessage.addListener(
             console.log("blueeeeeeeeee")
             // console.log("background.js onMessage listener: here 2", request.url);
             // chrome.tabs.create({"url": request.url});
+            chrome.browserAction.setBadgeText({ text: '!' });
+            chrome.browserAction.setBadgeBackgroundColor({ color: 'red' });
         }
     }
 );
