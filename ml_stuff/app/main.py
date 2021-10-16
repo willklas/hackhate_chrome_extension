@@ -6,15 +6,13 @@ from fastai.text.all import *
 
 from typing import Optional
 
-from fastapi import FastAPI, File, UploadFile
+from fastapi import Request, FastAPI, File, UploadFile
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
 origins = [
-    "http://localhost",
-    "http://localhost:8000",
     "*"
 ]
 
@@ -32,6 +30,7 @@ class Item(BaseModel):
 
 def prediction(text):
     
+    # print("text: ",text)
     test_string = tokenize1(text, SpacyTokenizer())
     preds = learn_clf.predict(test_string)
 
@@ -43,15 +42,14 @@ def read_root():
 
 
 @app.post("/prediction/")
-def read_item(item: Item):
-    labels, predictions, scores = prediction(item.text)
-    return {"text": item.text, 
+async def read_item(resq: Request):
+    
+    req = await resq.json()
+    # print("item: ", req['text'])
+    # prediction(req['text'])
+    labels, predictions, scores = prediction(req['text'])
+    return {"text": req['text'], 
             "labels": labels,
             "predictions": predictions,
             "scores": scores
     }
-
-
-
-
-
