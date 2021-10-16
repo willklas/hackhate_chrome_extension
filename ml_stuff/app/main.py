@@ -21,7 +21,6 @@ origins = [
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
-    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -43,7 +42,7 @@ def read_root():
     return {"Hello": "World"}
 
 
-@app.get("/prediction/")
+@app.post("/prediction/")
 def read_item(item: Item):
     labels, predictions, scores = prediction(item.text)
     return {"text": item.text, 
