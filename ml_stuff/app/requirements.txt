@@ -1,0 +1,7 @@
+matplotlib==3.4.1
+numpy==1.20.2
+torch==1.7.1
+torchvision==0.8.2
+fastbook==0.0.16
+python-multipart==0.0.5
+spacy==2.2.4
