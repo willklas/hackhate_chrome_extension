@@ -1,0 +1,470 @@
+/*############################################################ Similar Across all Pages ######################################################*/
+body{
+    overflow-x: hidden;
+}
+/* font style and font size for different tags */
+body p{
+    font-family: "Verdana", Geneva, sans-serif;   
+}
+body h4,h3,h2,h1{
+    font-family: "Verdana", Geneva, sans-serif; 
+}
+body a{
+    font-family: "Verdana", Geneva, sans-serif; 
+}
+body tr{
+    font-family: "Verdana", Geneva, sans-serif; 
+}
+body h1{
+    font-family: "Verdana", Geneva, sans-serif; 
+    Font-size:180%;
+}        
+/* style for the accessibility button */
+.accessibilityOption{
+  margin-bottom: 1%;  
+}
+
+/*############################################################ Navigation Bar ######################################################*/
+#navMenue{
+    width: 102%;
+    margin-bottom: 2%;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.topnav a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* navigation bar icon for hamburger menue is invisible on large devices */
+#topnavelementhamburgerbutton{display:none;}
+
+/* size of the navigation bar icon for hamburger menue */
+.fa{font-size: 25px;}
+
+/*prperties of navigation bar for small size devices */
+@media screen and (max-width: 600px) {
+    /* navigation bar icon for hamburger menue is visible on small size devices */
+    #topnavelementhamburgerbutton{display:block;}
+    /* navigation bar icon for hamburger menue is on the right side for small size devices */
+    .topnav a.hamburgermenuebutton {
+    float: right;
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+}
+
+/*############################################################ HomePage ##########################################################*/
+.container{
+    padding-top:1%;
+    padding-bottom: 5%;
+}
+
+/* style for the row that upward arrow icon is in, on the Home Page */
+.uparrow{
+    margin-top:1%;
+    margin-bottom: 1%;
+}
+/* style for the upward arrow icon on the Home Page */
+#uparrowicon{
+    float: right;
+    display: block;
+    width:5%;
+}
+    
+/*-------------------------------------------------------- First Row (MyBestShop) -----------------------------------------------*/
+#row1pic{
+    display: block;
+    width: 100%; 
+    margin-top: 10%;
+}
+
+/*--------------------------------------------------------------Second Row ------------------------------------------------------*/
+.secondrow{
+    margin-top:7%;
+}
+
+#row2pic{
+    display: block;
+    width: 33%; 
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2%;
+
+}
+
+#row2pic-{
+    display: block;
+    width: 30%; 
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -3%;
+
+}
+/* ------------------------------------------------------------ Twitter Feed --------------------------------------------------- */
+/* style for the twitterfeed sections on the Home Page */
+.twitterFeed{
+    margin-top:10%;
+}
+/*------------------------------------------------------------ About Section --------------------------------------------------- */
+.about{
+    margin-top:5%;
+    margin-bottom:6%;
+}
+/* style for the facebook share button on the Home Page */
+#fbshare{
+    width:100%;
+    margin-bottom: 5%;
+}
+#fb-root{
+    margin-left: 1%;
+}
+.aboutTitle{
+    margin-right: 1%;
+}
+/*-------------------------------------------------------------- Contact Form -------------------------------------------------- */
+.contact{
+    margin-top:3%;
+    width:100%; 
+    text-align: center;
+}
+.inputfield{
+    margin-top:0.5%;
+}
+#submitbuttonprop{
+    margin-top: 3%;
+    text-align: center;
+    width:50%;
+    border: 2px solid black;
+    border-radius: 25px;
+    background-color:white;
+    font-weight: 500;   
+    font-weight: bold;
+    font-size: 120%;
+}
+.inputfieldprop{
+    width:50%;
+    
+}
+#phoneFirst{
+    margin-right: 3%;
+    width:10%;
+}
+#phoneSecond{
+    margin-right: 3%;
+     width:10%;
+}
+#phoneThird{
+     width:13%;
+}
+#textareaprop{
+    width:50%;
+}
+
+#phonefield{
+    margin-left:2.2%;
+}
+/*---------------------------------------------------------------Contact Submission confirmation Popup ------------------------- */
+    .popup {
+        width:100%;
+        height:100%;
+        display:none;
+        position:fixed;
+        top:0px;
+        left:0px;
+        background:rgba(0,0,0,0.75);
+    }
+    /* style for the content/Text in the pop up */
+    .popupContent {
+        max-width:700px;
+        width:90%;
+        padding:40px;
+        position:absolute;
+        top:50%;
+        left:50%;
+        transform:translate(-50%, -50%); 
+        box-shadow:0px 2px 6px rgba(0,0,0,1);
+        border-radius:3px;
+        background:#fff;
+    }
+
+    /* style for the close button on the pop-up */
+    .PopupCloseButton {
+        width:30px;
+        height:30px;
+        padding-top:4px;
+        display:inline-block;
+        position:absolute;
+        top:0px;
+        right:0px;
+        transform:translate(50%, -50%); 
+        border-radius:1000px;
+        background:rgba(0,0,0,0.8);
+        font-family:Arial, Sans-Serif;
+        font-size:20px;
+        text-align:center;
+        line-height:100%;
+        color:#fff;
+    }
+    /* style for hover over the close button */
+    .PopupCloseButte:hover {
+        background:rgba(0,0,0,1);
+        text-decoration:none;
+    }
+/*------------------------------------------------------------------ footer ----------------------------------------------------*/
+.footer {
+   position:fixed;  
+   left:0px;
+   bottom:0px;
+   height:60px;
+   width:102%;
+   background:#000000;
+   margin-top:5%;
+   text-align: center;
+}
+.lastupdatedprop{
+    color: #FFFFFF;
+}
+.lastupdated{
+    padding-top:1.4%;
+}
+
+
+/*##########################################################  Send a gift  #######################################################*/
+.sendagiftmain {
+  text-align: center;
+  padding: 2em 5%;
+}
+/*properties of the search filter drop down */
+.filters{
+    margin-bottom:7%;
+    text-align: center;
+}
+/*properties of the item images */
+#itemimageprop{
+    display: block;
+    width:100%
+}
+/*properties of the image for medication iteam */
+#itemimagemedication{
+    width:53%;
+    margin-top:6%;
+    margin-bottom:4%;
+}
+/*properties of the image for meal iteam */
+#itemimagechicken{
+    height: 75%; 
+    width:75%;
+    margin-top:5%;
+    margin-bottom:6%;
+}
+/*properties of the image for school supply iteam */
+#itemimageschoolprep{
+    width:63%;
+    height: 73%;
+    margin-top:7%;
+}
+/*properties of the image for beans iteam */
+#itemimagebeans{
+    width:68%;
+    height:65%;
+    margin-bottom: 5%;
+    margin-top:6%;
+}
+/*properties of the image for backpack iteam */
+#itemimagebackpack{
+    width:60%;
+    height:63%;
+    margin-top:10%;
+}
+/*properties of the image for graduation iteam */
+#itemimagegrad{
+    width:83%;
+    margin-bottom:4%;
+    margin-top:8%;
+}
+/*properties of the image for winter jacket iteam */
+#itemimageWinterJacket{
+    width:58%;
+    margin-bottom: -4%;
+}
+/*properties of the image for warm blancket iteam */
+#itemimageBlancket{
+    width: 95%;
+    margin-bottom:4%;
+}
+/*properties of the image for gloves iteam */
+#itemimaGloves{
+    width:45%;
+    margin-bottom: 0.5%;
+}
+/*properties for the last row of items */
+.other{
+    margin-top:2%;
+    margin-bottom:3%;
+}
+.others{
+    margin-top:6.5%;
+}
+/*properties for the add to cart button */
+.row2_addtocardbutton{
+    margin-top:0%;
+    text-align: center;
+    margin-bottom: 3%;
+}
+/*properties for the first row of items */
+.row1{
+    margin-bottom:1%;
+   
+}
+.row1_addtocardbutton{
+    margin-top:0%;
+    text-align: center;
+}
+/*properties for the captions of items */
+.itemtitles{
+    text-align: center;
+}
+.itemimages{
+    margin-top:5%;
+    margin-bottom: 3%;
+}
+/*-------------------------------------------------------------------Shopping Cart -----------------------------------------------------------------------------*/
+/*properties of how the add to car button looks like */
+.addTocartButton {
+  display: inline-block;
+  padding: 1.2em 1.8em;
+  background: #2c97de;
+  width: 100%;
+  border-radius: 50em;
+  text-transform: uppercase;
+  color: #ffffff;
+  font-weight: 700;
+  letter-spacing: .1em;
+}
+/*properties of how the add to car button looks like */
+.addTocartButtonI {
+    display: inline-block;
+    padding: 1.2em 1.8em;
+    background: #17522a;
+    width: 100%;
+    border-radius: 50em;
+    text-transform: uppercase;
+    color: #ffffff;
+    font-weight: 700;
+    letter-spacing: .1em;
+  }
+/*the add to cart button slightly changes color when hovered */
+.addTocartButton:hover {
+  background: #42a2e1;
+}
+/* shopping cart is not visible when it is empty 
+/* properties of the box for the shopping cart icon */
+.cd-cart-trigger {
+  position: fixed;
+  bottom: 20px;
+  right: 5%;
+  z-index: 3;
+  height: 72px;
+  width: 72px;
+  text-indent: 100%;
+  background-color:#F2F4F4;
+  border-radius: 6px;
+}
+/* properties of the background image of the shopping cart */
+.cd-cart-trigger::after, .cd-cart-trigger::before {
+  content: '';
+  position: absolute;
+  left: 3.5%;
+  top: 3.5%;
+  bottom: auto;
+  right: auto;
+  height: 100%;
+  width: 100%;
+  background: url(../images/shopcart.png) no-repeat 0 0;
+  background-size: 100%;
+}
+
+/*properties of how the number of items in the shopping cart is displayed*/
+.cd-cart-trigger .count {
+  position: absolute;
+  top: -10px;
+  right: -13px;
+  height: 28px;
+  width: 28px;
+  background: #e94b35;
+  color: #ffffff;
+  font-weight: bold;
+  border-radius: 50%;
+  text-indent: 0;
+}
+.cd-cart-trigger .count li {
+  position: absolute;
+  left: 40%;
+  top: 20%;
+  bottom: auto;
+  right: auto;
+}
+#countnumber{
+    margin-left:-19%;
+}
+
+/*-------------------------------------------------------------------Transaction Page -------------------------------------------*/
+/*properties for the total price of the shopping cart */
+.totalprice{
+    margin-bottom: 0%;
+}
+/*properties for the transaction submission button */
+#checkoutbutton{
+    margin-bottom: 10%;
+    margin-top: 3%;
+    text-align: center;
+    width:50%;
+    border-radius: 25px;
+    background-color:white;
+    font-weight: 500;
+    border: 2px solid black; 
+    font-weight: bold;
+    font-size: 120%;
+}
+.transactionButton{
+    margin-bottom: 8%;
+}
+
+/*##########################################################  Gallery #######################################################*/
+/*properties for the tabel of donation summeries */
+.table{
+    margin-bottom:10%;
+}
+.table h4{
+    margin-bottom:2%;
+}
+#tableprop{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-width: medium;
+    width: 70%;
+}
+
+tr, td, th, table{
+    border-style: solid;
+    border-width: medium;   
+}
+/* -------------------------------------------------------- Searchbar ---------------------------------------------------*/
+/*properties for the search bar on the Gallery Page */
+#searchbar{
+    width:80%;
+    margin-bottom:2%;
+}

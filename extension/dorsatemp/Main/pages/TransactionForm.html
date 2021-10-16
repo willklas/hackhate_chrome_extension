@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title> CheckOut </title>
+        <meta charset="UTF-8">
+        <!--CSS Custom Style Sheet -->
+            <link rel="stylesheet" href="..\style\style.css" type="text/css"></link>
+        <!--Bootstrap-->
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"></link>
+        <!-- jQuery library -->
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <!-- JS Library for Bootstrap -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+        <!-- Latest compiled JavaScript -->
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+        <!-- Custom JS -->
+            <script type="text/javascript" src="..\js\js.js"></script> 
+            <script type="text/javascript" src="..\js\formdata.js"></script> 
+        <!-- fontawsem --> 
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">        
+    </head>
+     <body>
+        <header>
+        <!-- load nav9igation bar from the js file -->    
+            <nav id="navMenue"></nav>
+        </header>  
+    <!-- main -->  
+        <main>
+            <div class="container">
+                <div class="contact"> 
+                <!-- transaction form -->    
+                    <form name="contactform" id="form"> 
+                        <div class="row inputfield totalprice">
+                            <div class="col-md-12">
+                                <p id="totalprice"></p>
+                            </div> 
+                        </div>                 
+                        <div class="row inputfield">
+                            <div class="col-md-12">
+                                <p>Fist Name</p>
+                                <input type="text" class="inputfieldprop" name="firstName"> </input>
+                            </div> 
+                        </div>
+                        <div class="row inputfield">
+                            <div class="col-md-12">
+                                 <p>Last name</p>
+                                 <input type="text" class="inputfieldprop" name="lastName"> </input>
+                            </div> 
+                        </div>
+                        <div class="row inputfield">       
+                            <div class="col-md-12">  
+                                <p>e-mail</p>
+                                <input name="emailVerified" type="email" class="inputfieldprop">  </input>
+                            </div>
+                        </div>   
+                        <div class="row inputfield">  
+                            <div class="col-md-12">    
+                                <p>Phone Numbe</p>
+                                <input type="text" id="phoneFirst" name="phoneFirst" size=4  maxlength=3>
+                                <input type="text" id="phoneSecond" name="phoneSecond" size=4 maxlength=3> 
+                                <input type="text" id="phoneThird"  name="phoneThird" size=5 maxlength=4>  
+                            </div>
+                        </div>  
+                        <div class="row inputfield">  
+                            <div class="col-md-12">    
+                                <p>Credit Card Number</p>
+                                <input type="number" class="inputfieldprop" name="creditcard"></input>
+                            </div>
+                        </div> 
+                        <div class="row inputfield">
+                            <div class="col-md-12"> 
+                                <p> Recipient: </p>
+                                <select class="inputfieldprop" name="reciever">
+                                    <option value="anyone"> Anyone in-need </option>
+                                    <option value="orphan"> Orphan </option>
+                                    <option value="eldery"> Eldery </option>
+                                    <option value="newmother"> New Mother </option>
+                                    <option value="student"> Student </option>
+                                </select>   
+                            </div>
+                        </div>    
+                        <div class="row submitbutton transactionButton">
+                            <div class="col-md-12">
+                                <button id="checkoutbutton" class="btn" name="submit" type="submit"> Submit </button>                                
+                            </div>
+                        </div>
+                    </form>    
+                </div> 
+                <div class="popup" data-popup="popup">
+                    <div class="popupContent">
+                        <p id="popupText"> </p>
+                        <a class="PopupCloseButton" data-popup-close="popup" href="#">x</a>
+                    </div>
+                </div> 
+            </div>      
+        </main>
+    <!--footer -->  
+        <div class="footer">
+            <div class="row lastupdated">
+                <div class="col-md-12">
+                    <span class="lastupdatedprop"> Dorsa Yazdanpanah </span>
+                    <span class="lastupdatedprop"> 6.2.2018 </span>
+                </div>
+            </div> 
+        </div>          
+    </body>
+</html>
+
+<script>
+    // triggers the function to switch between normal mode and accessibility mode for large font
+    $("#accessibilityButton").click(accessibilityFunc);
+    window.onload = addtotalprice();
+    // load the function which adds the required property to the fields of thecontact us form
+    window.onload =contactform();
+    // load the function which sends the form data to google doc
+    window.onload =formData();
+    // trigger the function to validate email address
+    $(document).on('click', '#checkoutbutton', function () {checkemail();});
+    //triggers the funciton to open confirmation pop up
+    $(document).ready(function () {
+        $('#form').submit(function (e) {
+            e.preventDefault();
+            openpopup();
+        })
+    });        
+    // triggers the function to close the pop-up when the X button is clicked
+    $(".PopupCloseButton").click(closepopup);
+    
+    // loads the large size navigation bar
+    window.onload = loadNavbar();
+    
+    //loads the function to get media query size and therfore apply hamburger menue function if it is a small size device
+    window.onload = mediaqueryfunc();
+    
+    //eventlisteners for when the hamburger menue button is clicked , for small size devices 
+    $("#topnavelementhamburgerbutton").click(hamburgermenuefunc);
+    
+    // calls the function to activate SendsGift on the navigation bar
+    window.onload = sendagiftactivefunc();
+    
+    // loads the small size (hamburgermenue) navigation bar
+    window.onload = smallnavbarfunc();
+    
+    //eventlisteners for mouseover tabs of the top navigation bar
+    $("#topnavelementhome").mouseover(mouseoverFunc);
+    $("#topnavelementabout").mouseover(mouseoverFunc);
+    $("#topnavelementcontact").mouseover(mouseoverFunc);
+    $("#topnavelementgallery").mouseover(mouseoverFunc);
+    $("#topnavelementsendagift").mouseover(mouseoverFunc);
+    
+    //eventlisteners for mouseout tabs of the top navigation bar
+    $("#topnavelementhome").mouseout(mouseoutFunc);
+    $("#topnavelementabout").mouseout(mouseoutFunc);
+    $("#topnavelementcontact").mouseout(mouseoutFunc);
+    $("#topnavelementgallery").mouseout(mouseoutFunc);
+    $("#topnavelementsendagift").mouseout(mouseoutFunc);
+    
+    //eventlisteners for click on tabs of the top navigation bar
+    $("#topnavelementhome").click(activeFunc);
+    $("#topnavelementabout").click(activeFunc);
+    $("#topnavelementcontact").click(activeFunc);
+    $("#topnavelementgallery").click(activeFunc);
+    $("#topnavelementsendagift").click(activeFunc);
+ </script>

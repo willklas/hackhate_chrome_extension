@@ -1,0 +1,213 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head id="sources">
+        <title> MyBestShop </title>
+        <meta charset="UTF-8">
+        <!--CSS Custom Style Sheet -->
+        <link rel="stylesheet" href="..\style\style.css" type="text/css"></link>
+        <!--Bootstrap-->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"></link>
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <!-- Popper JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+         <!-- Custom JS -->
+        <script type="text/javascript" src="..\js\js.js"></script> 
+        <script type="text/javascript" src="..\js\PulsePlugin.js"></script> 
+        <link rel="stylesheet" href="../style/reset.css"> <!-- CSS reset -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    </head>
+     <body>
+        <header>
+            <nav id="navMenue"></nav>
+        </header>  
+    <!-- main -->    
+        <main class="sendagiftmain"> 
+            <div class="container">
+ <!--######################################## table ##########################################################################--> 
+                <!-- accessiblity mode buttons -->
+            <div class="row accessibilityOption">
+                <div class="col-md-10"></div>
+                <div class="col-md-2">    
+                    <button id="accessibilityButton" class="btn" > Large Font </button>
+                </div>    
+            </div>  
+            <div class="row table">  
+                <div class="col-md-12"> 
+                    <h4 style="text-align: center"> Donations Summary (CND$) </h4>
+                    <table  id="tableprop" class="table table-striped table-bordered table-responsive">  
+                        <tr>  
+                            <th style="width:25%">  </th>
+                            <th style="width:50%"> Total Donations </th>
+                            <th style="width:50%"> This Month's Donatoins</th>
+                        </tr>    
+                        <tr>
+                            <th> Food </th>
+                            <td> 100 </td>
+                            <td> 10 </td>
+                        </tr>
+                        <tr>     
+                            <th> Education </th>
+                            <td> 80 </td>
+                            <td> 17 </td>
+                        </tr>
+                        <tr>     
+                            <th> Medication </th>
+                            <td> 95 </td>
+                            <td> 9 </td>
+                        </tr> 
+                        <tr>     
+                            <th> Other </th>
+                            <td> 83 </td>
+                            <td> 12 </td>
+                        </tr>                                 
+                    </table>
+                </div>    
+            </div>    
+
+ <!--######################################## Searchbar##########################################################################--> 
+                <div class="row searchbar">
+                    <div class="col-md-12">
+                        <input id="searchbar" type="text" placeholder="ID: #"></input>
+                        <i id="refresh" class="fa fa-refresh" aria-hidden="true"></i>
+                    </div>
+                </div>    
+
+
+<!-- ################################################################# ROW 1 ITEMS ######################################################################### -->                             
+     
+                <div class="row row1">
+                    <div class="col-md-4 med item">  
+                        <div class="itemtitles"><h4> Medicatoins</h4>
+                        <p> ID: #W1F3G </p></div>
+                        <div class="itemimages"> <img id="itemimagemedication" title="source: https://www.google.ca/search?q=medication&rlz=1C1GGRV_enCA751CA751&source=lnms&tbm=isch&sa=X&ved=0ahUKEwiFm-q97vfdAhVK5YMKHc9WAKYQ_AUIDigB&biw=1536&bih=723#imgrc=zlAYpw0xpjN89M:" src="..\images\med.jpg" alt="sorry image is not available. This is an image of medication drugs"></img></div>
+                      
+                    </div>
+                    <div class="col-md-4 food item">  
+                        <div class="itemtitles"><h4> Warm Meal</h4>
+                        <p>  ID: #DW1BI </p></div>      
+                        <div class="itemimages"> <img id="itemimagechicken" src="..\images\warmmeal.jpg" title="source: https://www.google.ca/search?rlz=1C1GGRV_enCA751CA751&biw=1536&bih=723&tbm=isch&sa=1&ei=sNa7W7CpBaa-jwTvtprADA&q=rice+shawarma&oq=rice&gs_l=img.3.1.0i67k1l4j0l6.38174.38750.0.41033.4.4.0.0.0.0.102.336.3j1.4.0....0...1c.1.64.img..0.4.335...35i39k1.0.u1MWG575SqM#imgrc=8ISW4zO4uk_ukM:" alt="sorry image is not available. This is an image of a wamr meal"></img></div>    
+                                      
+                    </div>
+                    <div class="col-md-4 food item">  
+                        <div class="itemtitles"><h4> Mixed Beans </h4>
+                        <p> ID: #P9ZG4 </p></div>
+                        <div class="itemimages"> <img id="itemimagebeans" src="..\images\beans.jpg" title="source: https://www.google.ca/search?q=beans&rlz=1C1GGRV_enCA751CA751&source=lnms&tbm=isch&sa=X&ved=0ahUKEwi8kd3f7_fdAhWl6YMKHT-nAOgQ_AUIDigB&biw=1536&bih=723#imgrc=5GvL2Z2oUX3iZM:" alt="sorry image is not available. This is an image of asorted beans"></img></div>
+                      </a>
+                    </div>
+                </div>                       
+            
+ 
+<!-- ################################################################# ROW 2 ITEMS ######################################################################### -->                
+         
+                <div class="row">
+                    <div class="col-md-4 edu item">  
+                        <div class="itemtitles"><h4> Backpack</h4>
+                        <p>  ID: #L5W5OY </p></div>
+                        <div class="itemimages"> <img id="itemimagebackpack" src="..\images\backpack2.jpg" title="source: https://www.google.ca/search?q=backpack&rlz=1C1GGRV_enCA751CA751&source=lnms&tbm=isch&sa=X&ved=0ahUKEwijue737_fdAhUJ34MKHdAxAFEQ_AUIDigB&biw=1536&bih=723#imgrc=s9PtWC3RNN1GhM:"alt="sorry image is not available. This is an image of school backpack"></img></div>
+                    </div>
+                    <div class="col-md-4 edu item"> 
+                        <div class="itemtitles"><h4> School Supplies </h4>
+                        <p>  ID: #P79DQT </p></div>   
+                        <div class="itemimages"> <img id="itemimageschoolprep" src="..\images\schoolsupplies.jpg" title="source:https://www.greatschools.org/gk/articles/middle-school-back-to-school-supply-list/" alt="sorry image is not available.This is an image of school supplies"></img> </div>                                               
+                    </div>
+                    <div class="col-md-4 edu item">  
+                        <div class="itemtitles"><h4> Tutition Support</h4>
+                        <p>  ID: #1L3QC </p></div>
+                        <div class="itemimages"> <img id="itemimagegrad" src="..\images\grad.jpg" title="source: https://www.standardmedia.co.ke/business/article/2001274824/what-to-do-while-awaiting-graduation" alt="sorry image is not available. This is an image of graduation cap"></img> </div> 
+                    </div>
+                </div> 
+
+<!-- ################################################################# ROW 3 ITEMS ######################################################################### -->                
+         
+                <div class="row others">
+                    <div class="col-md-4 item">  
+                        <div class="itemtitles"><h4> Winter Jacket</h4>
+                        <p> ID: #08BZO </p></div>
+                        <div class="itemimages"> <img id="itemimageWinterJacket" src="..\images\winterjacket.jpg" title="source: https://www.google.ca/search?rlz=1C1GGRV_enCA751CA751&biw=1536&bih=723&tbm=isch&sa=1&ei=C9q7W7qQL8PcjwSkoKCwBQ&q=red+winter+jacket&oq=red+winter+jacket&gs_l=img.3..0l5.46229.46724.0.47321.4.4.0.0.0.0.114.371.3j1.4.0....0...1c.1.64.img..1.3.285...0i7i30k1.0.R8lq5e6sZNA#imgdii=-hCfbnN-clRlVM:&imgrc=1NGZw0Rbde99pM:"alt="sorry image is not available. This is an image of a winter jacket"></img></div>
+                    </div>
+                    <div class="col-md-4 item"> 
+                        <div class="itemtitles"><h4> Blancket </h4>
+                        <p> ID: #NM9QC </p></div>   
+                        <div class="itemimages"> <img id="itemimageBlancket" src="..\images\blancket.jpg" title="source: https://www.google.ca/search?q=blanket&rlz=1C1GGRV_enCA751CA751&source=lnms&tbm=isch&sa=X&ved=0ahUKEwiNwueL8_fdAhVK1oMKHfYPBk0Q_AUIDigB&biw=1536&bih=723#imgrc=rP6sDkaLvdr6oM:" alt="sorry image is not available. This is an image of a blancket"></img> </div>                                   
+                    </div>
+                    <div class="col-md-4 item">  
+                        <div class="itemtitles"><h4> Winter Glovest</h4>
+                        <p> ID: #3JJQC </p></div>
+                        <div class="itemimages"> <img id="itemimaGloves" src="..\images\gloves.jpg" title="source: https://www.google.ca/search?rlz=1C1GGRV_enCA751CA751&biw=1536&bih=723&tbm=isch&sa=1&ei=rNq7W6PgKqS4jwTZhLqoBA&q=gloves&oq=gloves&gs_l=img.3..0i67k1l3j0l7.18962.19595.0.19988.7.4.0.0.0.0.139.402.3j1.4.0....0...1c.1.64.img..5.2.234...0i7i30k1.0.lrYPJD0SRP0#imgrc=lBUFg_MwZl0F-M:" alt="sorry image is not available. This is an image of a pair of gloves"></img> </div> 
+                    </div>
+                </div>                                          
+            </div>
+        </main>        
+                
+        <!-- footer -->
+        <footer>
+            <div class="footer">
+                <div class="row lastupdated">
+                    <div class="col-md-12">
+                        <span class="lastupdatedprop"> Dorsa Yazdanpanah </span>
+                        <span class="lastupdatedprop"> 6.2.2018 </span>
+                    </div>
+                </div>   
+            </footer>                              
+        </div>               
+    </body>
+</html>
+<script>
+    // triggers the function to switch between normal mode and accessibility mode for large font
+    $("#accessibilityButton").click(accessibilityFunc);
+
+    // loads the large size navigation bar
+    window.onload = loadNavbar();
+   
+    //loads the function to get media query size and therfore apply hamburger menue function if it is a small size device
+    window.onload = mediaqueryfunc();
+   
+    //eventlisteners for when the hamburger menue button is clicked , for small size devices 
+    $("#topnavelementhamburgerbutton").click(hamburgermenuefunc);
+   
+    // calls the function to activate gallery on the navigation bar
+    window.onload = galleryactivefunc();
+   
+    // loads the small size (hamburgermenue) navigation bar
+    window.onload = smallnavbarfunc();
+   
+    // trigger the search bar function
+    window.onload= searchbar();
+   
+    // trigger the refresh button for the searchbar
+    $("#refresh").click(SearchbarRefresh);
+   
+    //eventlisteners for when the hamburger menue button is clicked , for small size devices 
+    $("#topnavelementhamburgerbutton").click(hamburgermenuefunc);
+    
+    //eventlisteners for mouseover tabs of the top navigation bar
+    $("#topnavelementhome").mouseover(mouseoverFunc);
+    
+    //eventlisteners for mouseover tabs of the top navigation bar
+    $("#topnavelementhome").mouseover(mouseoverFunc);
+    $("#topnavelementabout").mouseover(mouseoverFunc);
+    $("#topnavelementcontact").mouseover(mouseoverFunc);
+    $("#topnavelementgallery").mouseover(mouseoverFunc);
+    $("#topnavelementsendagift").mouseover(mouseoverFunc);
+    
+    //eventlisteners for mouseout tabs of the top navigation bar
+    $("#topnavelementhome").mouseout(mouseoutFunc);
+    $("#topnavelementabout").mouseout(mouseoutFunc);
+    $("#topnavelementcontact").mouseout(mouseoutFunc);
+    $("#topnavelementgallery").mouseout(mouseoutFunc);
+    $("#topnavelementsendagift").mouseout(mouseoutFunc);
+    
+    //eventlisteners for click on tabs of the top navigation bar
+    $("#topnavelementhome").click(activeFunc);
+    $("#topnavelementabout").click(activeFunc);
+    $("#topnavelementcontact").click(activeFunc);
+    $("#topnavelementgallery").click(activeFunc);
+    $("#topnavelementsendagift").click(activeFunc);
+
+</script>
+
