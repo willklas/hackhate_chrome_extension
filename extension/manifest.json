@@ -6,7 +6,7 @@
 // or json object
 {
     "manifest_version": 2, // version '1' is now unsupported so keep it '2'
-    "name": "HateHacker",
+    "name": "HateAbate",
     "version": "1.0",
     "content_scripts": [ // content scripts have access to actual webpage content
         { // this tells chrome to inject/run the listed scripts into all pages we vist from 'matches'
@@ -14,12 +14,11 @@
           // has loaded with the scripts themselves .
           // These scripts do NOT have access to browser actions of chrome api
             "matches": [
-                // "https://*.facebook.com/*"
-                "<all_urls>"
+                "https://*.facebook.com/*"
+                // "<all_urls>"
             ],
             "js": [ // exectuted in order
                 "jquery-3.6.0.js", // feature rich js library for greatly simplifying js
-                // "content2.js",
                 "content.js"
             ]
         }
@@ -29,7 +28,7 @@
     "browser_action": {
         "default_icon": "wolf.png",
         // "default_popup": "popup/index.html"
-        "default_popup": "dorsatemp/Main/pages/SendaGiftPage.html"
+        "default_popup": "popup/Main/pages/SendaGiftPage.html"
 
     },
     // "web_accessible_resources": [
@@ -41,6 +40,4 @@
                     // which content scripts can access
         "scripts": ["background.js"]
     }
-    // "content_security_policy": "script-src 'self' 'sha256-sWYHTj2Wwc79eR6vfK52z/vbzgN8zskd/E8VETH2KYc='"
-    // "content_security_policy": "default-src https:; script-src https: 'unsafe-inline'; style-src https: 'unsafe-inline'"
 }
