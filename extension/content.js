@@ -179,9 +179,9 @@ const hateful_words  = ["back", "violent", "incest", "kill", "criminal", "anti",
 // phrases for helping ml classifier (only while its weak) - if you can't get a system from above words
 const lgbtq_hateful_phrases = ["so gay"]
 // relevent links
-islam_link      = "http://localhost:7000/islamophobia.html"
-xenophobia_link = "http://localhost:7000/xenophobia.html"
-lgbtq_link      = "http://localhost:7000/lgbt.html"
+islam_link      = "http://localhost:7000/pages/islamophobia.html"
+xenophobia_link = "http://localhost:7000/pages/xenophobia.html"
+lgbtq_link      = "http://localhost:7000/pages/lgbt.html"
 
 // blur element
 function blur_element(element, text) {

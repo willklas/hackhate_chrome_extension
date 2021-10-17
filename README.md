@@ -4,5 +4,5 @@
     - popup contains the html/css/js for the popup/drop down screen for the chrome extension (when you click on the icon)
     - background js defines background script for controlling browser actions
     - content js is for code interacting with the web page
-    - *** local website currently hosted locally via python: "python -m http.server 7000" (from extension/popup/Main/pages/)
+    - *** local website currently hosted locally via python: "python -m http.server 7000" (from extension/popup/Main/)
 - ml stuff includes docker material needed to create docker image for hosting the ml classifying api
