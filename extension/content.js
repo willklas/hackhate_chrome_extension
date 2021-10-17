@@ -116,6 +116,14 @@ chrome.runtime.onMessage.addListener(
             // chrome.runtime.sendMessage({"do_it": "yup"});
 
        }
+       else if (request.name = "hate_api") {
+           console.log("oh boy", request.text, request.result)
+           if (request.result != "neither") {
+               element = element_id_to_element.get( parseInt(request.id) )
+               blur_element(element)
+           }
+       }
+
     }
 );
 
@@ -183,6 +191,13 @@ function isElementInViewport(el) {
 
 // responsilbe from getting text out of images
 function extract_txt_from_image(image_node) {
+    var string_id  = (element_to_element_id.get(element)).toString()
+    chrome.runtime.sendMessage({"name":"hate_api", "text": text, "id": string_id});
+
+
+
+
+
     
     /*
     // method 1
@@ -241,7 +256,9 @@ function extract_txt_from_image(image_node) {
 const elements_loaded = new Set() // loaded into DOM
 const elements_seen   = new Set() // seen by user (significantly in viewport)
 
-const button_to_image_dict = new Map()
+const button_to_image_dict  = new Map()
+const element_id_to_element = new Map()
+const element_to_element_id = new Map()
 var   num_elements_processed = 0
 // unblur blurred images and remove button
 function unblur_image(event) {
@@ -250,7 +267,7 @@ function unblur_image(event) {
     event.stopPropagation()
     event.preventDefault();
 
-    var button_node = document.getElementById(event.target.id)
+    var button_node = event.target //document.getElementById(event.target.id)
     var image_node  = button_to_image_dict.get(event.target.id)
 
     console.log(typeof button_node);
@@ -273,16 +290,16 @@ function button_offmouse_hover(event) {
     var button_node = document.getElementById(event.target.id)
     button_node.style.backgroundColor='#555'
 }
-
+var   num_buttons = 0
 // blur image
 function blur_element(element) {
     // if text contains hate speech
     element.style.webkitFilter = "blur(6px)";
-
+    num_buttons += 1
     // create button for hateful image
     var button_node         = document.createElement("button");
-    button_node.innerHTML   = "🐺Show?";
-    button_node.id          = "hate_hack_image_" + num_elements_processed.toString()
+    button_node.innerHTML   = "🐺May contain hateful content, view?";
+    button_node.id          = "hate_hack_image_" + num_buttons.toString()
     button_node.onmouseover = button_onmouse_hover;
     button_node.onmouseout  = button_offmouse_hover;
     
@@ -339,7 +356,7 @@ function check_for_hate(element, text) {
     // if (text.toLowerCase().includes("you are the")) {
         console.log("muah mauah muahghhh", text)
         // alert("hja")
-        blur_element(element)
+        // blur_element(element)
     // }
     
 
@@ -348,30 +365,31 @@ function check_for_hate(element, text) {
 
 
 
+    
+    var string_id  = (element_to_element_id.get(element)).toString()
+    chrome.runtime.sendMessage({"name":"hate_api", "text": text, "id": string_id});
 
+    // var myHeaders = new Headers();
+    // myHeaders.append("Content-Type", "application/json");
 
+    // var raw = JSON.stringify({
+    //   "text": "This just works"
+    // });
 
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
+    // var requestOptions = {
+    //   method: 'POST',
+    //   headers: myHeaders,
+    //   body: raw,
+    //   redirect: 'follow'
+    // };
 
-    var raw = JSON.stringify({
-      "text": "This just works"
-    });
-
-    var requestOptions = {
-      method: 'POST',
-      headers: myHeaders,
-      body: raw,
-      redirect: 'follow'
-    };
-
-    fetch("http://localhost:8000/prediction", requestOptions)
-      .then(response => response.text())
-      .then(result => {
-          var test = JSON.parse(result)
-          console.log("haha", test['labels'])
-        })
-      .catch(error => console.log('error', error));
+    // fetch("http://localhost:8000/prediction", requestOptions)
+    //   .then(response => response.text())
+    //   .then(result => {
+    //       var test = JSON.parse(result)
+    //       console.log("haha", test['labels'])
+    //     })
+    //   .catch(error => console.log('error', error));
 
 
 
@@ -439,7 +457,12 @@ function process_images() {
         for (var i = 0;i < elements_array.length; i++) {
             // elements_array[i].setAttribute("desired_attribute", "value");
             if (!elements_loaded.has(elements_array[i])) {
+                num_elements_processed += 1
                 elements_loaded.add(elements_array[i]);
+
+                
+                element_id_to_element.set(num_elements_processed, elements_array[i]);
+                element_to_element_id.set(elements_array[i], num_elements_processed)
 
                 var span_descendants = elements_array[i].querySelectorAll("div");
 
@@ -458,7 +481,7 @@ function process_images() {
 
                 tag = elements_array[i].tagName
 
-                num_elements_processed += 1
+                
 
                 
                 // check for hateful speech and (asynchonosly) apply blurring if hateful
