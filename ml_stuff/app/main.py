@@ -31,7 +31,7 @@ class Item(BaseModel):
 def prediction(text):
     
     # print("text: ",text)
-    test_string = tokenize1(text, SpacyTokenizer())
+    test_string = tokenize1(text, BaseTokenizer(), rules=[replace_all_caps])
     preds = learn_clf.predict(test_string)
 
     return list(preds[0]), preds[1].detach().numpy().tolist(), preds[2].detach().numpy().tolist()
