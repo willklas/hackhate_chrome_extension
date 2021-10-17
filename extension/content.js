@@ -10,6 +10,88 @@
 */
 
 
+// var myHeaders = new Headers();
+// myHeaders.append("Content-Type", "application/json");
+
+// var raw = JSON.stringify({
+//   "text": "This just works"
+// });
+
+// var requestOptions = {
+//   method: 'POST',
+//   headers: myHeaders,
+//   body: raw,
+//   redirect: 'follow'
+// };
+
+// fetch("http://localhost:8000/prediction", requestOptions)
+//   .then(response => response.text())
+//   .then(result => {
+//       var test = JSON.parse(result)
+//       console.log("haha", test['labels'])
+//     })
+//   .catch(error => console.log('error', error));
+
+
+
+// const xhttp = new XMLHttpRequest();
+// xhttp.onload = function(result) {
+// //   document.getElementById("demo").innerHTML = this.responseText;
+//     console.log("here ia m", xhttp.response)
+// }
+// xhttp.open("POST", "http://localhost:8000/prediction/");
+// xhttp.send(JSON.stringify({"text": "This just works"}))
+
+// var settings = {
+//     "url": "http://localhost:8000/prediction",
+//     "method": "POST",
+//     "timeout": 0,
+//     "headers": {
+//       "Content-Type": "application/json"
+//     },
+//     "data": JSON.stringify({
+//       "text": "This just works"
+//     }),
+//   };
+  
+//   $.ajax(settings).done(function (response) {
+//     console.log("jsklfjlkas;djfl;ajdfgl;kasj", response);
+//   });
+
+// console.log("jsjflskjflksjlkd")
+// $.ajax({
+//     url: 'http://localhost:8000/prediction/',
+//     // data: formData,
+//     // dataType: 'json',
+//     // cache: false,
+//     contentType: 'application/json',
+//     // processData: false,
+//     // dataType: 'application/json',
+//     "data": JSON.stringify({
+//         "text": "This just works"
+//       }),
+//     dataType: 'application/json',
+//     // Access_Control_Allow_Origin: true,
+//     // crossDomain : true,
+//     // headers: {  'Access-Control-Allow-Origin': 'https://www.facebook.com/' },
+//     type: 'GET',
+//     success: function (ocrParsedResult) {
+//         //Get the parsed results, exit code and error message and details
+//         // var parsed_results = (ocrParsedResult["ParsedResults"])
+//         // var parsed_text = ""
+//         // if (parsed_results) {
+//         //     parsed_text = parsed_results[0].ParsedText
+//         // }
+//         console.log("fuckkkkkkkkkkkkkkkkkk",ocrParsedResult["Hello"] )
+//         // const obj = JSON.parse(ocrParsedResult);
+//         console.log(typeof ocrParsedResult.Hello)
+//         alert("sdfsssssss")
+//         // check_for_hate(image_node, parsed_text)
+//         return
+//     }
+// });
+
+
 /* everything outside functions, listeners, observers, etc. will be run once when content.js is injected
    which is after the DOM has loaded
 */
@@ -260,6 +342,48 @@ function check_for_hate(element, text) {
         blur_element(element)
     // }
     
+
+
+
+
+
+
+
+
+
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify({
+      "text": "This just works"
+    });
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+
+    fetch("http://localhost:8000/prediction", requestOptions)
+      .then(response => response.text())
+      .then(result => {
+          var test = JSON.parse(result)
+          console.log("haha", test['labels'])
+        })
+      .catch(error => console.log('error', error));
+
+
+
+
+
+
+
+
+
+
+
+
     /*
     $.ajax({
         url: 'custom_hate_api',
